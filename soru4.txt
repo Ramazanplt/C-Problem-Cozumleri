@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <string.h>
+
+void baslayanKelimeleriBul(char metin[], char aranan[]) {
+    printf("Baslayan kelimeler: ");
+
+    char* kelime = strtok(metin, " "); // Metni boşluklara göre parçalara ayır
+
+    while (kelime != NULL) {
+        if (strncmp(kelime, aranan, strlen(aranan)) == 0) {
+            printf("%s ", kelime);
+        }
+        kelime = strtok(NULL, " "); // Sonraki kelimeye geç
+    }
+
+    printf("\n");
+}
+
+int main() {
+    char metin[] = "bu bir deneme metnidir bu metinde baslayan kelimeleri bulmak icin algoritma yazacagiz";
+    char aranan[] = "bu";
+
+    baslayanKelimeleriBul(metin, aranan);
+
+    return 0;
+}

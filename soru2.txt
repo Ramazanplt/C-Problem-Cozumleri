@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Bağlı Listeyi temsil etmek için düğüm yapısı
+struct Dugum {
+    int veri;
+    struct Dugum* sonraki;
+};
+
+// Bağlı Listeye yeni bir düğüm eklemek için fonksiyon
+void dugumEkle(struct Dugum** baslangic, int veri) {
+    // Yeni bir düğüm oluştur
+    struct Dugum* yeniDugum = (struct Dugum*)malloc(sizeof(struct Dugum));
+    yeniDugum->veri = veri;
+    yeniDugum->sonraki = NULL;
+
+    // Eğer bağlı liste boşsa, yeni düğümü başlangıç düğümü olarak ayarla
+    if (*baslangic == NULL) {
+        *baslangic = yeniDugum;
+    } else {
+        // Değilse, bağlı listenin sonuna kadar ilerle ve yeni düğümü ekleyin
+        struct Dugum* temp = *baslangic;
+        while (temp->sonraki != NULL) {
+            temp = temp->sonraki;
+        }
+        temp->sonraki = yeniDugum;
+    }
+}
+
+// Bağlı listedeki eleman sayısını bulan fonksiyon
+int elemanSayisi(struct Dugum* baslangic) {
+    int sayac = 0;
+    struct Dugum* temp = baslangic;
+
+    while (temp != NULL) {
+        sayac++;
+        temp = temp->sonraki;
+    }
+
+    return sayac;
+}
+
+int main() {
+    // Boş bir başlangıç düğümü oluştur
+    struct Dugum* baslangic = NULL;
+
+    // Bağlı listeye elemanlar ekle
+    dugumEkle(&baslangic, 5);
+    dugumEkle(&baslangic, 9);
+    dugumEkle(&baslangic, 3);
+    dugumEkle(&baslangic, 7);
+    dugumEkle(&baslangic, 1);
+
+    // Bağlı listedeki eleman sayısını bul
+    int sayac = elemanSayisi(baslangic);
+    printf("Eleman sayisi: %d\n", sayac);
+
+    return 0;
+}
